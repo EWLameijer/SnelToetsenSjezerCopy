@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnelToetsenSjezer.WinForms", "SnelToetsenSjezer\SnelToetsenSjezer.WinForms.csproj", "{077CABAD-CC0A-4BFB-BFCA-A599F31DE073}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Business", "1. Business", "{A541AAC8-22A2-4971-B85C-B5A86BC010D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Testing", "2. Testing", "{779C57E0-7240-42EA-AF0A-DE8DBFB36A17}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domain", "3. Domain", "{3E53A070-681A-4EB8-8B64-40AE43D10A34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnelToetsenSjezer.Domain", "SnelToetsenSjezer.Domain\SnelToetsenSjezer.Domain.csproj", "{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SnelToetsenSjezer.Business", "SnelToetsenSjezer.Business\SnelToetsenSjezer.Business.csproj", "{70574086-C31D-4CAD-8C20-E0FC938FA6E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{077CABAD-CC0A-4BFB-BFCA-A599F31DE073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{077CABAD-CC0A-4BFB-BFCA-A599F31DE073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{077CABAD-CC0A-4BFB-BFCA-A599F31DE073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{077CABAD-CC0A-4BFB-BFCA-A599F31DE073}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70574086-C31D-4CAD-8C20-E0FC938FA6E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70574086-C31D-4CAD-8C20-E0FC938FA6E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70574086-C31D-4CAD-8C20-E0FC938FA6E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70574086-C31D-4CAD-8C20-E0FC938FA6E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E622F3D-A093-4B92-B5BF-1E4A5FA52FCA} = {3E53A070-681A-4EB8-8B64-40AE43D10A34}
+		{70574086-C31D-4CAD-8C20-E0FC938FA6E0} = {A541AAC8-22A2-4971-B85C-B5A86BC010D0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3731AD27-73F1-43E1-BFF8-A21DAE06BB04}
+	EndGlobalSection
+EndGlobal
