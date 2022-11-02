@@ -8,12 +8,25 @@ public enum ModifierKey
 public class PressedKeysDict : Dictionary<string, bool>
 { };
 
-public class GameStateCallbackData
+// utility for reading in XML
+public class HotKeySolutionStepBuilder
 {
-    private readonly Dictionary<string, string> _dict = new();
+    private readonly SortedSet<ModifierKey> _activeModifiers = new();
+    private string _mainKey;
+    private static readonly IReadOnlyDictionary<string, ModifierKey> _modifiers = HotKeySolutionStep.Modifiers;
 
-    public void Add(string key, string value) => _dict[key] = value;
-};
+    public void Add(string keyCode)
+    {
+        if (_modifiers.ContainsKey(keyCode)) _activeModifiers.Add(_modifiers[keyCode]);
+        else _mainKey = keyCode;
+    }
+
+    public HotKeySolutionStep Build()
+    {
+        if (_mainKey == null) throw new ArgumentException("Main key cannot be undefined!");
+        return new HotKeySolutionStep(_mainKey, _activeModifiers.ToImmutableSortedSet());
+    }
+}
 
 /// <summary>
 /// HotKeySolutionStep is a List of SolutionStepPart's.<br/>
@@ -23,6 +36,14 @@ public class GameStateCallbackData
 /// </summary>
 public class HotKeySolutionStep
 {
+    public static IReadOnlyDictionary<string, ModifierKey> Modifiers
+= new Dictionary<string, ModifierKey>()
+{
+    ["Menu"] = ModifierKey.Alt,
+    ["ControlKey"] = ModifierKey.Ctrl,
+    ["ShiftKey"] = ModifierKey.Shift,
+};
+
     private readonly ImmutableSortedSet<ModifierKey> _activeModifiers;
     private readonly string _mainKey;
 

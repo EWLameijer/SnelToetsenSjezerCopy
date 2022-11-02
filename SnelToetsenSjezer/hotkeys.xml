@@ -10,13 +10,4 @@
 	<hotkey_group name="Windows">
 		<hotkey description="Knippen" keys="ControlKey+X" />
 	</hotkey_group>
-	<hotkey_group name="String tests">
-		<hotkey description="'prop',Tab,Tab" keys="'prop',Tab,Tab" />
-		<hotkey description="Tab,'prop',Tab" keys="Tab,'prop',Tab" />
-		<hotkey description="Tab,Tab,'prop'" keys="Tab,Tab,'prop'" />
-		<!--
-		<hotkey description="'abc',ControlKey+Z" keys="'abc',ControlKey+Z" />
-		<hotkey description="ControlKey+Z,'abc'" keys="ControlKey+Z,'abc'" />
-		-->
-	</hotkey_group>
 </hotkeys>

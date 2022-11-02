@@ -9,18 +9,11 @@ namespace SnelToetsenSjezer.Business;
 
 public class HotKeyGameService
 {
+    private readonly IReadOnlyDictionary<string, ModifierKey> _allModifiers = HotKeySolutionStep.Modifiers;
     private readonly SortedSet<ModifierKey> _activeModifiers = new();
 
-    private readonly IReadOnlyDictionary<string, ModifierKey> _modifiers
-        = new Dictionary<string, ModifierKey>()
-        {
-            ["Menu"] = ModifierKey.Alt,
-            ["ControlKey"] = ModifierKey.Ctrl,
-            ["ShiftKey"] = ModifierKey.Shift,
-        };
-
     private List<HotKey> _gameHotKeys = new() { };
-    private static PressedKeysDict _currentlyPressedKeys = new();
+    private static readonly PressedKeysDict _currentlyPressedKeys = new();
 
     private Action<string, GameStateCallbackData> gameStateUpdatedCallback = null;
     private Action<int, bool> gameTimerCallback = null;
@@ -92,6 +85,13 @@ public class HotKeyGameService
         Debug.WriteLine("Pausing game!");
         _isPaused = true;
         _pauseDuration = _pauseDurationDefault;
+        ResetKeys();
+    }
+
+    private void ResetKeys()
+    {
+        _activeModifiers.Clear();
+        _userInputSteps = new();
     }
 
     public void ResumeGame()
@@ -125,7 +125,8 @@ public class HotKeyGameService
     public void KeyDown(string keyName)
     {
         if (_isPaused) return;
-        if (_modifiers.ContainsKey(keyName)) _activeModifiers.Add(_modifiers[keyName]);
+
+        if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Add(_allModifiers[keyName]);
         else
         {
             Debug.WriteLine("KeyDown: " + keyName);
@@ -142,7 +143,7 @@ public class HotKeyGameService
     public void KeyUp(string keyName)
     {
         if (_isPaused) return;
-        if (_modifiers.ContainsKey(keyName)) _activeModifiers.Remove(_modifiers[keyName]);
+        if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Remove(_allModifiers[keyName]);
         Debug.WriteLine("KeyUp: " + keyName);
     }
 
@@ -154,8 +155,6 @@ public class HotKeyGameService
         HotKeySolutions hotKeySolutions = myHotKey.Solutions;
 
         bool hasAnyMatches = false;
-        bool failedString = false;
-        int solutionsShorterThenInput = 0;
 
         hotKeySolutions.Solutions.ToList().ForEach(hkSolution =>
         {
@@ -194,6 +193,7 @@ public class HotKeyGameService
         gameData.Add("userinputsteps", _userInputSteps.ToString());
         gameStateUpdatedCallback("correct", gameData);
         _gameHotKeys[_currHotKey].Failed = false;
+        _userInputSteps = new();
         PauseGame();
     }
 
@@ -208,16 +208,16 @@ public class HotKeyGameService
         GameStateCallbackData stateData = new()
         {
             { "solution", hotKeySolutionStr },
-            { "userinputsteps", GetUserInputSteps() }
+            { "userinputsteps", _userInputSteps.ToString() }
         };
         gameStateUpdatedCallback("failed", stateData);
+        _userInputSteps = new();
         PauseGame();
     }
 
     public void NextHotKey()
     {
-        _userInputSteps = new List<List<string>>();
-        _currentlyPressedKeys = new PressedKeysDict();
+        _userInputSteps = new();
         bool finished = false;
 
         if (!_dealingWithFails && _currHotKey < _gameHotKeys.Count() - 1)
@@ -226,12 +226,12 @@ public class HotKeyGameService
         }
         else
         {
-            int failsCount = _gameHotKeys.Where(hk => hk.Failed == true).ToList().Count();
+            int failsCount = _gameHotKeys.Count(hk => hk.Failed);
             if (failsCount > 0)
             {
                 if (!_dealingWithFails) _dealingWithFails = true;
 
-                for (int i = 0; i < _gameHotKeys.Count(); i++)
+                for (int i = 0; i < _gameHotKeys.Count; i++)
                 {
                     if (_gameHotKeys[i].Failed && (i != _currHotKey))
                     {
@@ -252,7 +252,7 @@ public class HotKeyGameService
             GameStateCallbackData stateData = new()
             {
                 { "index", (_currHotKey+1).ToString() },
-                { "count", _gameHotKeys.Count().ToString() },
+                { "count", _gameHotKeys.Count.ToString() },
                 { "attempt", _gameHotKeys[_currHotKey].Attempt.ToString() },
                 { "category", _gameHotKeys[_currHotKey].Category },
                 { "description", _gameHotKeys[_currHotKey].Description },

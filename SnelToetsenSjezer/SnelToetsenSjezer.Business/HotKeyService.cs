@@ -1,129 +1,103 @@
-﻿using SnelToetsenSjezer.Domain.Enums;
+﻿using System.Xml;
 using SnelToetsenSjezer.Domain.Interfaces;
 using SnelToetsenSjezer.Domain.Models;
 using SnelToetsenSjezer.Domain.Types;
-using System.Xml;
 
-namespace SnelToetsenSjezer.Business
+namespace SnelToetsenSjezer.Business;
+
+public class HotKeyService : IHotKeyService
 {
-    public class HotKeyService : IHotKeyService
+    private readonly List<HotKey> _allHotKeys = new() { };
+
+    public HotKeySolutions SolutionsStringToObject(string solutions)
     {
-        private readonly List<HotKey> _allHotKeys = new() { };
+        HotKeySolutions allSolutions = new();
+        bool multipleSolutions = solutions.Contains("||");
+        List<string> solutionsStrings = multipleSolutions ? solutions.Split("||").ToList() : new List<string>() { solutions };
 
-        public HotKeySolutions SolutionsStringToObject(string solutions)
+        solutionsStrings.ToList().ForEach(solutionString => // For each solution
         {
-            HotKeySolutions allSolutions = new HotKeySolutions();
-            bool multipleSolutions = solutions.Contains("||");
-            List<string> solutionsStrings = multipleSolutions ? solutions.Split("||").ToList() : new List<string>() { solutions };
-
-            solutionsStrings.ToList().ForEach(solutionString =>
+            List<string> solutionStrSteps = solutionString.Split(",").ToList();
+            HotKeySolution solution = new();
+            solutionStrSteps.ToList().ForEach(solutionStrStep => // For each Keycombo in the solution
             {
-                HotKeySolution newSolution = new HotKeySolution();
-                List<string> solutionStrSteps = solutionString.Split(",").ToList();
-
-                solutionStrSteps.ToList().ForEach(solutionStrStep =>
+                HotKeySolutionStepBuilder newSolutionStepBuilder = new();
+                foreach (string key in solutionStrStep.Split("+"))
                 {
-                    HotKeySolutionStep newSolutionStep = new HotKeySolutionStep();
-                    bool isString = solutionStrStep.Contains("'");
-                    bool isCombination = solutionStrStep.Contains("+");
+                    newSolutionStepBuilder.Add(key);
+                }
 
-                    if (isString)
-                    {
-                        newSolutionStep.Add(new SolutionStepPart()
-                        {
-                            Type = SolutionStepPartType.String,
-                            Value = solutionStrStep.Substring(1, solutionStrStep.Length - 2)
-                        });
-                    }
-                    else if (isCombination)
-                    {
-                        solutionStrStep.Split("+").ToList().ForEach(solutionStrStepPart =>
-                        {
-                            newSolutionStep.Add(new SolutionStepPart()
-                            {
-                                Type = SolutionStepPartType.Key,
-                                Value = solutionStrStepPart
-                            });
-                        });
-                    }
-                    else
-                    {
-                        newSolutionStep.Add(new SolutionStepPart()
-                        {
-                            Type = SolutionStepPartType.Key,
-                            Value = solutionStrStep
-                        });
-                    }
-
-                    newSolution.Add(newSolutionStep);
-                });
-
-                allSolutions.Add(newSolution);
+                HotKeySolutionStep newSolutionStep = newSolutionStepBuilder.Build();
+                solution.SolutionSteps.Add(newSolutionStep);
             });
+            allSolutions.Solutions.Add(solution);
+        });
 
-            return allSolutions;
-        }
+        return allSolutions;
+    }
 
-        public void AddHotKey(string category, string description, string solutions)
+    public void AddHotKey(string category, string description, string solutions)
+    {
+        HotKey myNewHotKey = new()
         {
-            HotKey myNewHotKey = new HotKey()
-            {
-                Category = category,
-                Description = description,
-                Solutions = SolutionsStringToObject(solutions)
-            };
-            _allHotKeys.Add(myNewHotKey);
-        }
+            Category = category,
+            Description = description,
+            Solutions = SolutionsStringToObject(solutions)
+        };
+        _allHotKeys.Add(myNewHotKey);
+    }
 
-        public void ProcessHotkeysXmlFile(string filePath)
+    public void ProcessHotkeysXmlFile(string filePath)
+    {
+        XmlDocument hotKeysXml = new();
+        hotKeysXml.Load(filePath);
+
+        if (hotKeysXml.DocumentElement != null)
         {
-            XmlDocument hotKeysXml = new XmlDocument();
-            hotKeysXml.Load(filePath);
-
-            if (hotKeysXml.DocumentElement != null)
+            foreach (XmlNode node in hotKeysXml.DocumentElement.ChildNodes)
             {
-                foreach (XmlNode node in hotKeysXml.DocumentElement.ChildNodes)
+                string? category = node.Attributes?["name"]?.InnerText;
+                if (!string.IsNullOrEmpty(category))
                 {
-                    string? category = node.Attributes?["name"]?.InnerText;
-                    if (!string.IsNullOrEmpty(category))
+                    foreach (XmlNode childNode in node.ChildNodes)
                     {
-                        foreach (XmlNode childNode in node.ChildNodes)
-                        {
-                            string? description = childNode.Attributes?["description"]?.InnerText;
-                            string? keys = childNode.Attributes?["keys"]?.InnerText;
+                        string? description = childNode.Attributes?["description"]?.InnerText;
+                        string? keys = childNode.Attributes?["keys"]?.InnerText;
 
-                            if (!string.IsNullOrEmpty(description) && !string.IsNullOrEmpty(keys))
-                            {
-                                AddHotKey(category, description, keys);
-                            }
+                        if (!string.IsNullOrEmpty(description) && !string.IsNullOrEmpty(keys))
+                        {
+                            AddHotKey(category, description, keys);
                         }
                     }
                 }
             }
         }
-        public List<string> GetCategories()
-        {
-            List<string> Categories = new List<string>();
-            _allHotKeys.GroupBy(hk => hk.Category).ToList().ForEach(hk_item =>
-            {
-                Categories.Add(hk_item.ElementAt(0).Category);
-            });
-            return Categories;
-        }
+    }
 
-        public List<HotKey> GetAllHotKeys()
+    public List<string> GetCategories()
+    {
+        List<string> Categories = new();
+        _allHotKeys.GroupBy(hk => hk.Category).ToList().ForEach(hk_item =>
         {
-            return _allHotKeys;
-        }
-        public List<HotKey> GetHotKeysInCategory(string category)
-        {
-            if (category.Length < 1) return new List<HotKey> { };
-            return _allHotKeys.Where(hk => hk.Category == category).ToList();
-        }
-        public List<HotKey> GetHotKeysInCategories(List<string> categories)
-        {
-            if (categories.Count() < 1) return new List<HotKey> { };
-            return _allHotKeys.Where(hk => categories.Contains(hk.Category)).ToList();
-        }
+            Categories.Add(hk_item.ElementAt(0).Category);
+        });
+        return Categories;
+    }
+
+    public List<HotKey> GetAllHotKeys()
+    {
+        return _allHotKeys;
+    }
+
+    public List<HotKey> GetHotKeysInCategory(string category)
+    {
+        if (category.Length < 1) return new List<HotKey> { };
+        return _allHotKeys.Where(hk => hk.Category == category).ToList();
+    }
+
+    public List<HotKey> GetHotKeysInCategories(List<string> categories)
+    {
+        if (categories.Count() < 1) return new List<HotKey> { };
+        return _allHotKeys.Where(hk => categories.Contains(hk.Category)).ToList();
     }
 }
