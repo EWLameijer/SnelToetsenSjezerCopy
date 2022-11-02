@@ -1,11 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hotkeys>
 	<hotkey_group name="Visual Studio">
+
+		<hotkey description="'Spiek' de definitie van een term" keys="Menu+F12" />
+		<hotkey description="Ga naar de implementatie van een interface" keys="ControlKey+F12" />
+		<hotkey description="Toon plaatsen waar de term wordt gebruikt" keys="ShiftKey+F12" />
+		<hotkey description="Naar vorige positie cursor" keys="ControlKey+OemMinus" />
+		<hotkey description="Naar vorige editpositie" keys="ControlKey+ShiftKey+Back" />
+		<hotkey description="Selecteer recent document" keys="ControlKey+Tab" />
+		<hotkey description="Maak bookmark" keys="ControlKey+K,ControlKey+K" />
+		<hotkey description="Ga naar het bookmark-window" keys="ControlKey+K,ControlKey+W" />
+		<hotkey description="Ga naar het vorige bookmark" keys="ControlKey+K,ControlKey+P" />
+		<hotkey description="Ga naar het volgende bookmark" keys="ControlKey+K,ControlKey+N" />
+		<hotkey description="Verwijder alle bookmarks" keys="ControlKey+K,ControlKey+L" />
+		<hotkey description="Maak een shortcut (soort bookmark, maar in task window)" keys="ControlKey+K,ControlKey+H" />
+		<hotkey description="Klap alle methoden in" keys="ControlKey+M,ControlKey+O" />
+		<hotkey description="Klap alle methoden uit" keys="ControlKey+M,ControlKey+P" />
+		<hotkey description="Code verkleinen" keys="ControlKey+ShiftKey+Oemcomma" />
+		<hotkey description="Code vergroten" keys="ControlKey+ShiftKey+OemPeriod" />
+		<hotkey description="Vind huidige file in solution explorer" keys="ControlKey+OemOpenBrackets,S" />
+		<hotkey description="Ga naar Git explorer" keys="ControlKey+D0,G||ControlKey+D0,ControlKey+G" />
+		<hotkey description="Ga naar Task window" keys="ControlKey+Oem5,T||ControlKey+Oem5,ControlKey+T" />
+		<hotkey description="Open plakbordmenu" keys="ControlKey+ShiftKey+V" />
+		<hotkey description="Als niets geselecteerd: verwijder huidige regel" keys="ControlKey+X" />
+		<hotkey description="Verwijder vorig woord" keys="ControlKey+Back" />
+		<hotkey description="Begin debuggen" keys="F5" />
+		<hotkey description="Stop uitvoering van programma" keys="ShiftKey+F5" />
+		<hotkey description="Stop en herstart uitvoering van programma" keys="ControlKey+ShiftKey+F5" />
+		<hotkey description="Begin programma in niet-debugmode" keys="ControlKey+F5" />
+		<hotkey description="Stap over methode (bij debuggen)" keys="F10" />
+		<hotkey description="Ga naar cursor (bij debuggen)" keys="ControlKey+F10" />
+		<hotkey description="Stap in methode (bij debuggen)" keys="F11" />
+		<hotkey description="Stap uit methode (bij debuggen)" keys="ShiftKey+F11" />
+		<hotkey description="Voeg quickwatch toe" keys="ShiftKey+F9" />
+		<hotkey description="Ga naar Immediate Window" keys="ControlKey+Menu+I" />
+		<hotkey description="Ga naar Locals Window" keys="ControlKey+Menu+V,L" />
+		<hotkey description="Ga naar Autos Window" keys="ControlKey+Menu+V,A" />
+		<hotkey description="Ga naar breakpoints window" keys="ControlKey+Menu+B" />
+		<hotkey description="Dupliceer regel" keys="ControlKey+D" />
+		<hotkey description="Maak {} na if/while/methodenaam" keys="ShiftKey+Return" />
+		<hotkey description="Maak Console.WriteLine()" keys="C,W,Tab,Tab" />
+		<hotkey description="Maak constructor" keys="C,T,O,R,Tab,Tab" />
+		<hotkey description="Omring door snippet" keys="ControlKey+K,ControlKey+S" />
+		<hotkey description="Algemeen refactoren" keys="ControlKey+OemPeriod" />
+		<hotkey description="Hernoem identifier" keys="ControlKey+R,ControlKey+R" />
+		<hotkey description="Extraheer methode" keys="ControlKey+R,ControlKey+M" />
+		<hotkey description="Geselecteerde code naar boven" keys="Menu+Up" />
+		<hotkey description="Geselecteerde code naar beneden" keys="Menu+Down" />
+		<hotkey description="Sluit huidig editwindow" keys="ControlKey+F4" />
+		<hotkey description="Save all files" keys="ControlKey+ShiftKey+S" />
+		<hotkey description="Formatteer code (normaal)" keys="ControlKey+K,ControlKey+D" />
+		<hotkey description="Formatteer code (bezem-mode)" keys="ControlKey+K,ControlKey+E" />
+		<hotkey description="Beweeg tekst omhoog maar houd cursor op zelfde positie" keys="ControlKey+Up" />
+		<hotkey description="Beweeg tekst omlaag maar houd cursor op zelfde positie" keys="ControlKey+Down" />
 		<hotkey description="Maak een property" keys="P,R,O,P,Tab,Tab" />
 		<hotkey description="Ga naar de solution explorer" keys="ControlKey+Menu+L" />
 		<hotkey description="Zet een breakpoint" keys="F9" />
-		<hotkey description="Ga naar het error window" keys="ControlKey+Oem5,ControlKey+E||ControlKey+Oem5+E||ControlKey+Oem5,E" />
-		<hotkey description="Comment de geselecteerde text" keys="ControlKey+K,ControlKey+C||ControlKey+K+C" />
+		<hotkey description="Ga naar het error window" keys="ControlKey+Oem5,ControlKey+E||ControlKey+Oem5,E" />
+		<hotkey description="Linecomment de geselecteerde text" keys="ControlKey+K,ControlKey+C||ControlKey+K,ControlKey+OemQuestion" />
+		<hotkey description="Blockcomment de geselecteerde text" keys="ControlKey+K,ControlKey+ShiftKey+OemQuestion" />
+		<hotkey description="Uncomment de geselecteerde text" keys="ControlKey+K,ControlKey+U" />
+		<hotkey description="Zoek in huidig bestand" keys="ControlKey+F" />
+		<hotkey description="Zoek in alle bestanden" keys="ControlKey+ShiftKey+F" />
+		<hotkey description="Zoek in broncode" keys="ControlKey+T" />
+		<hotkey description="Zoek in Visual Studio-opties of broncode" keys="ControlKey+Q" />
+		<hotkey description="Zoek in Solution Explorer" keys="ControlKey+Oem1" />
+		<hotkey description="Ga naar de definitie van een term" keys="F12" />
 	</hotkey_group>
 	<hotkey_group name="Windows">
 		<hotkey description="Knippen" keys="ControlKey+X" />

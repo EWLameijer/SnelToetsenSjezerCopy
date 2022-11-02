@@ -124,12 +124,11 @@ public class HotKeyGameService
 
     public void KeyDown(string keyName)
     {
+        Debug.WriteLine("KeyDown: " + keyName);
         if (_isPaused) return;
-
         if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Add(_allModifiers[keyName]);
         else
         {
-            Debug.WriteLine("KeyDown: " + keyName);
             HotKeySolutionStep currentStep = new(keyName, _activeModifiers.ToImmutableSortedSet());
             _userInputSteps.Add(currentStep);
             GameStateCallbackData gameData = new();
@@ -142,9 +141,9 @@ public class HotKeyGameService
 
     public void KeyUp(string keyName)
     {
+        Debug.WriteLine("KeyUp: " + keyName);
         if (_isPaused) return;
         if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Remove(_allModifiers[keyName]);
-        Debug.WriteLine("KeyUp: " + keyName);
     }
 
     public void CheckForProgressOrFail()
@@ -201,14 +200,12 @@ public class HotKeyGameService
     {
         _gameHotKeys[_currHotKey].Failed = true;
 
-        string hotKeySolutionStr = "";
         HotKeySolutions hotKeySolutions = _gameHotKeys[_currHotKey].Solutions;
-        string exampleSolution = hotKeySolutions.Solutions.ToList()[0].ToString();
 
         GameStateCallbackData stateData = new()
         {
-            { "solution", hotKeySolutionStr },
-            { "userinputsteps", _userInputSteps.ToString() }
+            { "solution", $"{hotKeySolutions}" },
+            { "userinputsteps", $"{_userInputSteps}" }
         };
         gameStateUpdatedCallback("failed", stateData);
         _userInputSteps = new();

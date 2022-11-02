@@ -56,13 +56,31 @@ public class HotKeySolutionStep
     public bool Matches(HotKeySolutionStep other) =>
         _mainKey == other._mainKey && _activeModifiers.SetEquals(other._activeModifiers);
 
+    // TODO: ideally, SHIFT+. should be ">"!
+    private static readonly Dictionary<string, string> _userFriendlyName = new()
+    {
+        ["D0"] = "0",
+        ["Oem1"] = ";",
+        ["Oem4"] = "[",
+        ["Oem5"] = "\\",
+        ["Oemcomma"] = ",",
+        ["OemMinus"] = "-",
+        ["OemPeriod"] = ".",
+        ["OemQuestion"] = "/",
+        ["Back"] = "Backspace"
+    };
+
+    private string ConvertToHumanReadableKeyname(string officialKeyname) =>
+        _userFriendlyName.ContainsKey(officialKeyname) ? _userFriendlyName[officialKeyname] :
+            officialKeyname;
+
     public override string ToString()
     {
         List<string> keysPressed = new();
-        if (_activeModifiers.Contains(ModifierKey.Alt)) keysPressed.Add("Alt");
         if (_activeModifiers.Contains(ModifierKey.Ctrl)) keysPressed.Add("Ctrl");
+        if (_activeModifiers.Contains(ModifierKey.Alt)) keysPressed.Add("Alt");
         if (_activeModifiers.Contains(ModifierKey.Shift)) keysPressed.Add("Shift");
-        keysPressed.Add(_mainKey);
+        keysPressed.Add(ConvertToHumanReadableKeyname(_mainKey));
         return string.Join("+", keysPressed);
     }
 }
@@ -93,4 +111,9 @@ public class HotKeySolutions
     public HashSet<HotKeySolution> Solutions { get; set; } = new();
 
     public int Count => Solutions.Count;
+
+    public override string ToString()
+    {
+        return string.Join(" or ", Solutions.ToList());
+    }
 }
