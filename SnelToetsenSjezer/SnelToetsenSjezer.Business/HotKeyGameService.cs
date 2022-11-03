@@ -1,7 +1,7 @@
-﻿using SnelToetsenSjezer.Domain.Models;
-using SnelToetsenSjezer.Domain.Types;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Diagnostics;
+using SnelToetsenSjezer.Domain.Models;
+using SnelToetsenSjezer.Domain.Types;
 using GameStateCallbackData = System.Collections.Generic.Dictionary<string, string>;
 using Timer = System.Windows.Forms.Timer;
 
@@ -127,16 +127,20 @@ public class HotKeyGameService
         Debug.WriteLine("KeyDown: " + keyName);
         if (_isPaused) return;
         if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Add(_allModifiers[keyName]);
-        else
-        {
-            HotKeySolutionStep currentStep = new(keyName, _activeModifiers.ToImmutableSortedSet());
-            _userInputSteps.Add(currentStep);
-            GameStateCallbackData gameData = new();
-            gameData.Add("userinputsteps", _userInputSteps!.ToString());
+        else SubmitKeyComboForTesting(keyName);
+    }
 
-            gameStateUpdatedCallback("userinputsteps", gameData);
-            CheckForProgressOrFail();
-        }
+    private void SubmitKeyComboForTesting(string keyName)
+    {
+        HotKeySolutionStep currentStep = new(keyName, _activeModifiers.ToImmutableSortedSet());
+        _userInputSteps.Add(currentStep);
+        GameStateCallbackData gameData = new()
+        {
+           { "userinputsteps", _userInputSteps!.ToString() }
+        };
+
+        gameStateUpdatedCallback("userinputsteps", gameData);
+        CheckForProgressOrFail();
     }
 
     public void KeyUp(string keyName)
@@ -147,17 +151,10 @@ public class HotKeyGameService
 
         // edge-case voor Nvidia GeForce Experience software die bij Alt+F12
         // het F12 keyDown event niet door blijkt te geven
-        if (_allModifiers.ContainsKey("Menu") && _activeModifiers.Count() == 1 &&
-            !_allModifiers.ContainsKey("F12") && keyName == "F12")
+        if (_allModifiers.ContainsKey("Menu") && keyName == "F12")
         {
             Debug.WriteLine("!!! Nvidia Geforce Experience edge-case is in effect !!!");
-
-            HotKeySolutionStep currentStep = new(keyName, _activeModifiers.ToImmutableSortedSet());
-            _userInputSteps.Add(currentStep);
-            GameStateCallbackData gameData = new();
-            gameData.Add("userinputsteps", _userInputSteps!.ToString());
-            gameStateUpdatedCallback("userinputsteps", gameData);
-            CheckForProgressOrFail();
+            SubmitKeyComboForTesting(keyName);
         }
     }
 

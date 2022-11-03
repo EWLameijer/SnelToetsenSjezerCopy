@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <hotkeys>
 	<hotkey_group name="Visual Studio">
-
 		<hotkey description="'Spiek' de definitie van een term" keys="Menu+F12" />
 		<hotkey description="Ga naar de implementatie van een interface" keys="ControlKey+F12" />
 		<hotkey description="Toon plaatsen waar de term wordt gebruikt" keys="ShiftKey+F12" />
