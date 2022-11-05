@@ -65,6 +65,7 @@ public class HotKeySolutionStep
         ["Oem5"] = "\\",
         ["Oemcomma"] = ",",
         ["OemMinus"] = "-",
+        ["OemOpenBrackets"] = "[",
         ["OemPeriod"] = ".",
         ["OemQuestion"] = "/",
         ["Back"] = "Backspace"

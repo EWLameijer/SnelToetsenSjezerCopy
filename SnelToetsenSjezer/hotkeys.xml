@@ -50,8 +50,9 @@
 		<hotkey description="Save all files" keys="ControlKey+ShiftKey+S" />
 		<hotkey description="Formatteer code (normaal)" keys="ControlKey+K,ControlKey+D" />
 		<hotkey description="Formatteer code (bezem-mode)" keys="ControlKey+K,ControlKey+E" />
-		<hotkey description="Beweeg tekst omhoog maar houd cursor op zelfde positie" keys="ControlKey+Up" />
-		<hotkey description="Beweeg tekst omlaag maar houd cursor op zelfde positie" keys="ControlKey+Down" />
+		<hotkey description="Scroll tekst omlaag maar houd cursor op zelfde positie" keys="ControlKey+Up" />
+		<hotkey description="Scroll tekst omhoog
+				maar houd cursor op zelfde positie" keys="ControlKey+Down" />
 		<hotkey description="Maak een property" keys="P,R,O,P,Tab,Tab" />
 		<hotkey description="Ga naar de solution explorer" keys="ControlKey+Menu+L" />
 		<hotkey description="Zet een breakpoint" keys="F9" />
