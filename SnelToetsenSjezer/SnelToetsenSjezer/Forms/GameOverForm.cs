@@ -10,34 +10,40 @@ public partial class GameOverForm : Form
         InitializeComponent();
 
         List<HotKey> gameHotKeys = gameService.GetGameHotKeys();
-        int gameDuration = gameService.GetGameDuration();
+        double gameDuration = gameService.GetGameDuration();
 
-        NumHotKeysValue.Text = gameHotKeys.Count().ToString();
-        TimeSpentValue.Text = gameDuration.ToString();
+        NumHotKeysValue.Text = gameHotKeys.Count.ToString();
+        TimeSpentValue.Text = (gameDuration / 1000).ToString() + " s";
 
         int hotKeyCounter = 0;
 
         gameHotKeys.ForEach(hotKey =>
         {
-            Panel detailPanel = new();
-            detailPanel.Size = new Size(768, 25);
-            detailPanel.Location = new Point(0, 25 * hotKeyCounter);
+            Panel detailPanel = new()
+            {
+                Size = new Size(768, 25),
+                Location = new Point(0, 25 * hotKeyCounter)
+            };
 
-            Label lblHotKey = new();
-            lblHotKey.Size = new Size(430, 25);
-            lblHotKey.Text = hotKey.Description;
-            lblHotKey.BorderStyle = BorderStyle.FixedSingle;
+            Label lblHotKey = new()
+            {
+                Size = new Size(430, 25),
+                Text = hotKey.Description,
+                BorderStyle = BorderStyle.FixedSingle
+            };
 
-            Label lblAttempts = new();
-            lblAttempts.Size = new Size(160, 25);
-            lblAttempts.Location = new Point(440, 0);
-            lblAttempts.Text = hotKey.Attempt.ToString();
-            lblAttempts.BorderStyle = BorderStyle.FixedSingle;
+            Label lblAttempts = new()
+            {
+                Size = new Size(160, 25),
+                Location = new Point(440, 0),
+                Text = hotKey.Attempt.ToString(),
+                BorderStyle = BorderStyle.FixedSingle
+            };
 
             Label lblTime = new();
             lblTime.Size = new Size(160, 25);
             lblTime.Location = new Point(600, 0);
-            lblTime.Text = hotKey.Seconds.ToString();
+            lblTime.Text = (hotKey.MilliSeconds / 1000).ToString() + " s";
             lblTime.BorderStyle = BorderStyle.FixedSingle;
 
             detailPanel.Controls.Add(lblHotKey);

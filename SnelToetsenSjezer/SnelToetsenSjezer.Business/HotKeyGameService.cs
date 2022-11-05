@@ -9,21 +9,20 @@ namespace SnelToetsenSjezer.Business;
 
 public class HotKeyGameService
 {
+    public const int IntervalInMs = 100;
+
     private readonly IReadOnlyDictionary<string, ModifierKey> _allModifiers = HotKeySolutionStep.Modifiers;
     private readonly SortedSet<ModifierKey> _activeModifiers = new();
 
     private List<HotKey> _gameHotKeys = new() { };
-    private static readonly PressedKeysDict _currentlyPressedKeys = new();
 
     private Action<string, GameStateCallbackData> gameStateUpdatedCallback = null;
-    private Action<int, bool> gameTimerCallback = null;
+    private Action<double, bool> gameTimerCallback = null;
 
-    private static Timer? _gameTimer = null;
-    private static int _gameSeconds = 0;
+    private Timer? _gameTimer = null;
+    private double _gameMilliSeconds = 0.0;
 
-    private static bool _isPaused = false;
-    private static readonly int _pauseDurationDefault = 2;
-    private static int _pauseDuration = 0;
+    private bool _isPaused = false;
 
     private HotKeySolution _userInputSteps = new();
 
@@ -44,7 +43,7 @@ public class HotKeyGameService
         gameStateUpdatedCallback = callback;
     }
 
-    public void SetGameTimerCallback(Action<int, bool> callback)
+    public void SetGameTimerCallback(Action<double, bool> callback)
     {
         gameTimerCallback = callback;
     }
@@ -53,15 +52,17 @@ public class HotKeyGameService
     {
         Debug.WriteLine("Starting game!");
         if (_gameTimer != null) _gameTimer.Dispose();
-        _gameSeconds = 0;
-        _gameTimer = new Timer();
-        _gameTimer.Interval = 1000;
+        _gameMilliSeconds = 0;
+        _gameTimer = new Timer
+        {
+            Interval = IntervalInMs
+        };
         _gameTimer.Tick += new EventHandler(GameTimer_Tick);
         _gameTimer.Start();
 
         GameStateCallbackData stateData = new();
         stateData.Add("index", "1");
-        stateData.Add("count", _gameHotKeys.Count().ToString());
+        stateData.Add("count", _gameHotKeys.Count.ToString());
         stateData.Add("category", _gameHotKeys[_currHotKey].Category);
         stateData.Add("description", _gameHotKeys[_currHotKey].Description);
 
@@ -84,7 +85,6 @@ public class HotKeyGameService
     {
         Debug.WriteLine("Pausing game!");
         _isPaused = true;
-        _pauseDuration = _pauseDurationDefault;
         ResetKeys();
     }
 
@@ -105,27 +105,21 @@ public class HotKeyGameService
     {
         if (!_isPaused)
         {
-            _gameSeconds++;
-            _gameHotKeys[_currHotKey].Seconds++;
+            _gameMilliSeconds += IntervalInMs;
+            _gameHotKeys[_currHotKey].MilliSeconds += IntervalInMs;
         }
         else
-        {
-            if (_pauseDuration > 0)
-            {
-                _pauseDuration--;
-            }
-            else
-            {
-                ResumeGame();
-            }
-        }
-        gameTimerCallback(_gameSeconds, _isPaused);
+            gameTimerCallback(_gameMilliSeconds, _isPaused);
     }
 
     public void KeyDown(string keyName)
     {
         Debug.WriteLine("KeyDown: " + keyName);
-        if (_isPaused) return;
+        if (_isPaused)
+        {
+            ResumeGame();
+            return;
+        }
         if (_allModifiers.ContainsKey(keyName)) _activeModifiers.Add(_allModifiers[keyName]);
         else SubmitKeyComboForTesting(keyName);
     }
@@ -229,7 +223,7 @@ public class HotKeyGameService
         _userInputSteps = new();
         bool finished = false;
 
-        if (!_dealingWithFails && _currHotKey < _gameHotKeys.Count() - 1)
+        if (!_dealingWithFails && _currHotKey < _gameHotKeys.Count - 1)
         {
             _currHotKey++;
         }
@@ -276,8 +270,8 @@ public class HotKeyGameService
         return _gameHotKeys;
     }
 
-    public int GetGameDuration()
+    public double GetGameDuration()
     {
-        return _gameSeconds;
+        return _gameMilliSeconds;
     }
 }

@@ -18,10 +18,10 @@ public partial class GameForm : Form
         MyHotKeyGameService.StartGame();
     }
 
-    public void UpdateTimer(int seconds, bool paused)
+    public void UpdateTimer(double milliSeconds, bool paused)
     {
-        TimeSpan time = TimeSpan.FromSeconds(seconds);
-        lbl_timer.Text = time.ToString((seconds > 3600) ? @"hh\:mm\:ss" : @"mm\:ss");
+        TimeSpan time = TimeSpan.FromMilliseconds(milliSeconds);
+        lbl_timer.Text = time.ToString((milliSeconds > 3_600_000) ? @"hh\:mm\:ss" : @"mm\:ss");
         lbl_timer.ForeColor = paused ? Color.Gray : Color.Black;
     }
 
@@ -33,7 +33,7 @@ public partial class GameForm : Form
                 string hotKeyText = $"Hotkey {stateDetails["index"]} of {stateDetails["count"]}";
                 if (stateDetails.ContainsKey("attempt"))
                 {
-                    hotKeyText += (Int32.Parse(stateDetails["attempt"]) > 1) ? $"(Attempt #{stateDetails["attempt"]})" : "";
+                    hotKeyText += (int.Parse(stateDetails["attempt"]) > 1) ? $"(Attempt #{stateDetails["attempt"]})" : "";
                 }
                 lbl_currhotkey.Text = hotKeyText;
                 lbl_category_val.Text = stateDetails["category"];
@@ -41,12 +41,13 @@ public partial class GameForm : Form
                 break;
 
             case "correct":
-                lbl_description_val.Text = "Correct!\nGet ready for the next question!";
+                lbl_description_val.Text = "Correct😁!\nPress any key to continue!";
                 break;
 
             case "failed":
                 lbl_description_val.Text = "Failed!\n" +
-                    "The correct answer is: " + stateDetails["solution"];
+                    "The correct answer is: " + stateDetails["solution"] +
+                    "\nPress any key to continue!";
                 break;
 
             case "finished":

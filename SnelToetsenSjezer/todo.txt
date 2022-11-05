@@ -1,0 +1,2 @@
+Wat je wil is ideaal dat de tijd doortikt (en mogelijk in tienden van seconden)
+Maar het tonen van een nieuwe kaart moet NIET afhangen van pauzes,
