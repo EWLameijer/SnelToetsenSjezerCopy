@@ -58,7 +58,7 @@
 		<hotkey description="Zet een breakpoint" keys="F9" />
 		<hotkey description="Ga naar het error window" keys="ControlKey+Oem5,ControlKey+E||ControlKey+Oem5,E" />
 		<hotkey description="Linecomment de geselecteerde text" keys="ControlKey+K,ControlKey+C||ControlKey+K,ControlKey+OemQuestion" />
-		<hotkey description="Blockcomment de geselecteerde text" keys="ControlKey+K,ControlKey+ShiftKey+OemQuestion" />
+		<hotkey description="Toggle blockcomment van de geselecteerde text" keys="ControlKey+ShiftKey+OemQuestion" />
 		<hotkey description="Uncomment de geselecteerde text" keys="ControlKey+K,ControlKey+U" />
 		<hotkey description="Zoek in huidig bestand" keys="ControlKey+F" />
 		<hotkey description="Zoek in alle bestanden" keys="ControlKey+ShiftKey+F" />
