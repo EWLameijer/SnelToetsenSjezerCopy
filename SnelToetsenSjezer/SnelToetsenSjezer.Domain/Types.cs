@@ -60,6 +60,8 @@ public class HotKeySolutionStep
     private static readonly Dictionary<string, string> _userFriendlyName = new()
     {
         ["D0"] = "0",
+        ["D1"] = "1",
+        ["Next"] = "PageDown",
         ["Oem1"] = ";",
         ["Oem4"] = "[",
         ["Oem5"] = "\\",
