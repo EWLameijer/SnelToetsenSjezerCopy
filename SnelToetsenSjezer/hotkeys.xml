@@ -66,6 +66,10 @@
 		<hotkey description="Zoek in Visual Studio-opties of broncode" keys="ControlKey+Q" />
 		<hotkey description="Zoek in Solution Explorer" keys="ControlKey+Oem1" />
 		<hotkey description="Ga naar de definitie van een term" keys="F12" />
+		<hotkey description="Zoek op type" keys="ControlKey+D1,T" />
+		<hotkey description="Naar volgend item in subwindow" keys="F8" />
+		<hotkey description="Naar volgend editwindow" keys="ControlKey+Menu+PageDown" />
+		<hotkey description="Naar vorig editwindow" keys="ControlKey+Menu+PageUp" />
 	</hotkey_group>
 	<hotkey_group name="Windows">
 		<hotkey description="Knippen" keys="ControlKey+X" />

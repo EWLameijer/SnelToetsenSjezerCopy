@@ -39,6 +39,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_category_key
@@ -141,11 +142,22 @@
             this.label1.TabIndex = 6;
             this.label1.Text = " Your input ";
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(12, 203);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(125, 33);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Use shortcut:";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 241);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lbl_userinputsteps_val);
@@ -180,5 +192,6 @@
         private TextBox textBox1;
         private Panel panel1;
         private Label label1;
+        private Label label2;
     }
 }
