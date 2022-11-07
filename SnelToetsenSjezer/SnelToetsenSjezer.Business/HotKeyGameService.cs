@@ -9,7 +9,7 @@ namespace SnelToetsenSjezer.Business;
 
 public class HotKeyGameService
 {
-    public const int IntervalInMs = 100;
+    public const int IntervalInMs = 10;
 
     private readonly IReadOnlyDictionary<string, ModifierKey> _allModifiers = HotKeySolutionStep.Modifiers;
     private readonly SortedSet<ModifierKey> _activeModifiers = new();
