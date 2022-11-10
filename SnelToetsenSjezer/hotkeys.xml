@@ -70,6 +70,9 @@
 		<hotkey description="Naar volgend item in subwindow" keys="F8" />
 		<hotkey description="Naar volgend editwindow" keys="ControlKey+Menu+Next" />
 		<hotkey description="Naar vorig editwindow" keys="ControlKey+Menu+PageUp" />
+		<hotkey description="Regel verwijderen (als iets geselecteerd is)" keys="ControlKey+ShiftKey+L" />
+		<hotkey description="Solution builden" keys="ControlKey+ShiftKey+B" />
+		<hotkey description="Verwijder alle breakpoints" keys="ControlKey+ShiftKey+F9" />
 	</hotkey_group>
 	<hotkey_group name="Windows">
 		<hotkey description="Knippen" keys="ControlKey+X" />
