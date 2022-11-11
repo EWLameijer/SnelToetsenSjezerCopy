@@ -17,7 +17,7 @@
 		<hotkey description="Klap alle methoden uit" keys="ControlKey+M,ControlKey+P" />
 		<hotkey description="Code verkleinen" keys="ControlKey+ShiftKey+Oemcomma" />
 		<hotkey description="Code vergroten" keys="ControlKey+ShiftKey+OemPeriod" />
-		<hotkey description="Vind huidige file in solution explorer" keys="ControlKey+OemOpenBrackets,S" />
+		<hotkey description="Vind huidige file in solution explorer" keys="ControlKey+OemOpenBrackets,S||ControlKey+OemOpenBrackets,ControlKey+S" />
 		<hotkey description="Ga naar Git explorer" keys="ControlKey+D0,G||ControlKey+D0,ControlKey+G" />
 		<hotkey description="Ga naar Task window" keys="ControlKey+Oem5,T||ControlKey+Oem5,ControlKey+T" />
 		<hotkey description="Open plakbordmenu" keys="ControlKey+ShiftKey+V" />
