@@ -73,6 +73,8 @@
 		<hotkey description="Regel verwijderen (als iets geselecteerd is)" keys="ControlKey+ShiftKey+L" />
 		<hotkey description="Solution builden" keys="ControlKey+ShiftKey+B" />
 		<hotkey description="Verwijder alle breakpoints" keys="ControlKey+ShiftKey+F9" />
+		<hotkey description="Sluit console window (of Visual Studio, dus pas op!)" keys="Menu+F4" />
+		<hotkey description="Verwijder actief subwindow (zoals output)" keys="ShiftKey+Escape" />
 	</hotkey_group>
 	<hotkey_group name="Windows">
 		<hotkey description="Knippen" keys="ControlKey+X" />
